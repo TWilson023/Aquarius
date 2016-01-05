@@ -1,7 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "Object.h"
 #include "Model.h"
+#include "primitives/Cube.h"
 #include "Camera.h"
 #include "ShaderProgram.h"
 
@@ -14,7 +16,7 @@ class Game {
 		ShaderProgram* simpleShader;
 	private:
 		Camera* camera;
-		Model* model;
+		Object* object;
 };
 
 #endif

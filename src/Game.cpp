@@ -12,8 +12,8 @@ Game::Game(GLFWwindow* window) {
 void Game::init() {
 	simpleShader = new ShaderProgram("shaders/simple.vert", "shaders/simple.frag");
 	Texture* texture = new Texture();
-	texture->loadDDS("res/uvmap.DDS");
-	model = new Model("res/cube.obj", simpleShader, texture);
+	texture->loadDDS("res/cube.DDS");
+	object = new Object(new Model("res/cube.obj", simpleShader), glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 void Game::update() {
@@ -29,5 +29,5 @@ void Game::render() {
 	glm::mat4 modelMatrix = glm::mat4(1.0);
 	glm::mat4 mvp = projectionMatrix * viewMatrix * modelMatrix;
 
-	model->render(mvp);
+	object->render(mvp);
 }

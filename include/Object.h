@@ -1,12 +1,16 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "Model.h"
+#include <glm/glm.hpp>
+
+#include "Renderable.h"
 
 class Object {
 	public:
-		Object(Model* model);
-		Model* model;
+		Object(Renderable* renderable, glm::vec3 position);
+		Renderable* renderable;
+		glm::vec3 position;
+		void render(glm::mat4 mvp);
 };
 
 #endif

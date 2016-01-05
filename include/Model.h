@@ -8,22 +8,17 @@
 #include "Geometry.h"
 #include "ShaderProgram.h"
 #include "Texture.h"
+#include "Mesh.h"
 
-class Model : Geometry {
+class Model : public Renderable {
 	public:
-		Model(const char* path, ShaderProgram* s, Texture* t = NULL);
+		Model(const char* path, ShaderProgram* shaderProgram);
+		ShaderProgram* shaderProgram;
+		std::vector<Mesh> meshes;
 		bool loadOBJ(const char* path);
 		void render(glm::mat4 mvp);
-		glm::vec3 color;
-		Texture* texture;
-		ShaderProgram* shaderProgram;
 	private:
 		void init();
-		GLuint vertexBuffer, uvBuffer;
-		GLuint textureID, colorID;
-		float time;
-		std::vector<glm::vec3> vertices, normals;
-		std::vector<glm::vec2> uvs;
 };
 
 #endif

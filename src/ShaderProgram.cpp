@@ -13,16 +13,6 @@ ShaderProgram::ShaderProgram(const char* vertexFile, const char* fragmentFile) {
 
 void ShaderProgram::use() {
 	glUseProgram(programID);
-	for(unsigned int i = 0; i < uniforms.size(); i++) {
-		switch(uniforms[i].type) {
-			case FLOAT:
-				glUniform1f(uniforms[i].id, uniforms[i].value.vf[0]);
-				break;
-			case INT:
-				glUniform1i(uniforms[i].id, uniforms[i].value.vi[0]);
-				break;
-		}
-	}
 	glUniform1f(glfwTimeID, (float) glfwGetTime());
 }
 
@@ -30,32 +20,8 @@ void ShaderProgram::mvp(glm::mat4 mvp) {
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
 }
 
-GLuint ShaderProgram::setUniform(UniformType type, const char* name, UniformValue value) {
-	for(unsigned int i = 0; i < uniforms.size(); i++) {
-		if(strcmp(uniforms[i].name, name) == 0) {
-			uniforms[i].value = value;
-			return uniforms[i].id;
-		}
-	}
-	ShaderUniform u;
-	u.id = glGetUniformLocation(programID, name);
-	u.type = type;
-	u.name = name;
-	u.value = value;
-	uniforms.push_back(u);
-	return u.id;
-}
-
-GLuint ShaderProgram::setUniformi(const char* name, int value) {
-	UniformValue uv;
-	uv.vi[0] = value;
-	return ShaderProgram::setUniform(INT, name, uv);
-}
-
-GLuint ShaderProgram::setUniformf(const char* name, float value) {
-	UniformValue uv;
-	uv.vf[0] = value;
-	return ShaderProgram::setUniform(FLOAT, name, uv);
+GLuint ShaderProgram::createUniform(const char* name) {
+	return glGetUniformLocation(programID, name);
 }
 
 std::string ShaderProgram::readFile(const char* file) {

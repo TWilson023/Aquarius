@@ -1,58 +1,19 @@
 #include "Model.h"
 
-#include <vector>
 #include <stdio.h>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <cstring>
 
-Model::Model(const char* path, ShaderProgram* s, Texture* t) {
-	GLuint vertexArrayID;
-	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);
-
-	color = glm::vec3(1.0f, 1.0f, 1.0f);
-
-	this->shaderProgram = s;
-
-	this->texture = t;
-	if(t != NULL)
-		textureID = glGetUniformLocation(shaderProgram->programID, "textureSampler");
-
+Model::Model(const char* path, ShaderProgram* shaderProgram) {
+	this->shaderProgram = shaderProgram;
 	loadOBJ(path);
-
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
-
-	glGenBuffers(1, &uvBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
-	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
 }
 
 void Model::render(glm::mat4 mvp) {
-	shaderProgram->use();
-	shaderProgram->mvp(mvp);
-
-	if(this->texture != NULL) {
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture->textureID);
-		glUniform1i(textureID, 0);
-	}
-
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
+	for(unsigned short i = 0; i < meshes.size(); i++)
+		meshes[i].render(mvp);
 }
 
 bool Model::loadOBJ(const char* path) {
@@ -112,6 +73,10 @@ bool Model::loadOBJ(const char* path) {
 		}
 	}
 
+	std::vector<glm::vec3> vertices, normals;
+	std::vector<glm::vec2> uvs;
+	std::vector<unsigned int> indices;
+
 	for(unsigned int i = 0; i < vertexIndices.size(); i++) {
 		unsigned int vertexIndex = vertexIndices[i];
 		unsigned int uvIndex = uvIndices[i];
@@ -121,10 +86,12 @@ bool Model::loadOBJ(const char* path) {
 		glm::vec2 uv = tempUvs[uvIndex - 1];
 		glm::vec3 normal = tempNormals[normalIndex - 1];
 
-		this->vertices.push_back(vertex);
-		this->uvs.push_back(uv);
-		this->normals.push_back(normal);
+		vertices.push_back(vertex);
+		uvs.push_back(uv);
+		normals.push_back(normal);
 	}
+
+	meshes.push_back(Mesh(shaderProgram, vertices, normals, uvs, indices));
 
 	return true;
 }

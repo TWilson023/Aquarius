@@ -35,7 +35,7 @@ void Camera::computeMatrices() {
 	glm::vec3 right = glm::vec3(sin(yaw - 3.14f / 2.0f), 0, cos(yaw - 3.14f / 2.0f));
 	glm::vec3 up = glm::cross(right, direction);
 
-	float speed = 3.0f;
+	float speed = 5.0f;
 
 	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		position += direction * deltaTime * speed;

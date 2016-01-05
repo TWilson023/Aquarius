@@ -13,10 +13,6 @@ void Cube::constructPrimitive() {
 		vec3(0.5f, 0.0f, 0.5f),   vec3(0.5f, 0.0f, -0.5f),  vec3(0.5f, 1.0f, -0.5f),  vec3(0.5f, 1.0f, 0.5f),
 		vec3(-0.5f, 0.0f, -0.5f),  vec3(-0.5f, 0.0f, 0.5f),  vec3(-0.5f, 1.0f, 0.5f), vec3(-0.5f, 1.0f, -0.5f)
 	};
-	/*unsigned int indexArray[] = {
-		0,1,2,3, 4,5,6,7, 3,2,5,4,
-		7,6,1,0, 8,9,10,11, 12,13,14,15
-	};*/
 	unsigned int indexArray[] = {
 		0,1,2, 0,2,3,
 		4,5,6, 4,6,7,
