@@ -2,7 +2,7 @@
 #define TEXTURE_H
 
 #include <GL/glew.h>
-#include <glfw3.h>
+#include <glfw/glfw3.h>
 #include <vector>
 #include <stdio.h>
 #include <string>

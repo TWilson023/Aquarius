@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <GL/glew.h>
-#include <glfw3.h>
+#include <glfw/glfw3.h>
 
 #include "Game.h"
 
@@ -22,7 +22,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Mac happiness
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow( 1080, 720, "Aquarius", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1080, 720, "Aquarius", NULL, NULL);
 	if(window == NULL) {
 		fprintf(stderr, "Failed to create window\n");
 		getchar();
@@ -51,7 +51,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
-
+	
 	while (glfwWindowShouldClose(window) == 0 && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
 		game->render();
 		glfwSwapBuffers(window);

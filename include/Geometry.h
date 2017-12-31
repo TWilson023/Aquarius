@@ -22,7 +22,6 @@ class Geometry : public Renderable {
 		std::vector<unsigned int> indices;
 		GLuint vertexBuffer, uvBuffer, normalBuffer, elementBuffer;
 		GLenum drawMode;
-	private:
 		GLuint textureID, colorID, hasTextureID;
 };
 

@@ -35,7 +35,7 @@ void Camera::computeMatrices() {
 	glm::vec3 right = glm::vec3(sin(yaw - 3.14f / 2.0f), 0, cos(yaw - 3.14f / 2.0f));
 	glm::vec3 up = glm::cross(right, direction);
 
-	float speed = 5.0f;
+	float speed = 15.0f;
 
 	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		position += direction * deltaTime * speed;
@@ -46,7 +46,7 @@ void Camera::computeMatrices() {
 	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		position -= right * deltaTime * speed;
 
-	projectionMatrix = glm::perspective(glm::radians(fov), (float) windowWidth / (float) windowHeight, 0.1f, 100.0f);
+	projectionMatrix = glm::perspective(glm::radians(fov), (float) windowWidth / (float) windowHeight, 0.1f, 1000.0f);
 	viewMatrix = glm::lookAt(position, position + direction, up);
 
 	lastTime = currentTime;

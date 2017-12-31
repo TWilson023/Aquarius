@@ -35,7 +35,7 @@ std::string ShaderProgram::readFile(const char* file) {
 		stream.close();
 	} else {
 		printf("Failed to read shader: %s!\n", file);
-		return NULL;
+		return std::string("");
 	}
 	return sourceFile;
 }
