@@ -1,5 +1,1 @@
-# Aquarius
-
-Just the beginnings of a graphics engine.<br>
-Uses OpenGL/GLFW.<br>
-I'll eventually implement my new LOD algorithm for some testing.
+Hi Tim, email me please or open your DM's on Twitter! - Tom, twagner55@gmail.com
